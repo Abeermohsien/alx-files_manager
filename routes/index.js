@@ -4,13 +4,14 @@ import UsersController from '../controllers/UsersController';
 import AuthController from '../controllers/AuthController';
 import FilesController from '../controllers/FilesController';
 
-function controllerRouting(app) {
-  const router = express.Router();
+const router = express.Router();
+
+const routeController = (app) => {
   app.use('/', router);
 
   // App Controller
-
-  // should return if Redis is alive and if the DB is alive
+ 
+  //  should return if Redis is alive and if the DB is alive
   router.get('/status', (req, res) => {
     AppController.getStatus(req, res);
   });
@@ -20,8 +21,8 @@ function controllerRouting(app) {
     AppController.getStats(req, res);
   });
 
-  // User Controller
-
+  // Users Controller
+  
   // should create a new user in DB
   router.post('/users', (req, res) => {
     UsersController.postNew(req, res);
@@ -73,9 +74,9 @@ function controllerRouting(app) {
   });
 
   // return iD
-  router.get('/files/:id/data', (req, res) => {
+  router.post('/files/:id/data', (req, res) => {
     FilesController.getFile(req, res);
   });
-}
+};
 
-export default controllerRouting;
+export default routeController;
