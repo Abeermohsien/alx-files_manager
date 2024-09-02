@@ -4,79 +4,78 @@ import UsersController from '../controllers/UsersController';
 import AuthController from '../controllers/AuthController';
 import FilesController from '../controllers/FilesController';
 
-const router = express.Router();
-
-const routeController = (app) => {
+function controllerRouting(app) {
+  const router = express.Router();
   app.use('/', router);
 
-  // App Controller
- 
-  //  should return if Redis is alive and if the DB is alive
+  // application controller
+
+  // must  return if Redis is alive and if the DB is alive
   router.get('/status', (req, res) => {
     AppController.getStatus(req, res);
   });
 
-  // should return the number of users and files in DB
+  // must  return the number of users and files in DB
   router.get('/stats', (req, res) => {
     AppController.getStats(req, res);
   });
 
-  // Users Controller
-  
-  // should create a new user in DB
+  // User Controller
+
+  // createing new user in DB
   router.post('/users', (req, res) => {
     UsersController.postNew(req, res);
   });
 
-  // should retrieve the user base on the token used
+  // return trieve the user base on the token used
   router.get('/users/me', (req, res) => {
     UsersController.getMe(req, res);
   });
 
-  // Auth Controller
+  // authentication Controller
 
-  // should sign-in the user by generating a new authentication token
+  // must  sign-in the user by generating a new authentication token
   router.get('/connect', (req, res) => {
     AuthController.getConnect(req, res);
   });
 
-  // should sign-out the user based on the token
+  // must   sign-out the user based on the token
   router.get('/disconnect', (req, res) => {
     AuthController.getDisconnect(req, res);
   });
 
-  // Files Controller
+  // fliessController
 
-  // should create a new file in DB and in disk
+  // must   create a new file in DB and in disk
   router.post('/files', (req, res) => {
     FilesController.postUpload(req, res);
   });
 
-  // should retrieve the file document based on the ID
+  // must   retrieve the file document based on the ID
   router.get('/files/:id', (req, res) => {
     FilesController.getShow(req, res);
   });
 
-  // should retrieve all users file documents for a
-  // specific parentId and with pagination
+  // mustd retrieve all users file documents for a
+  // returningific parentId and with pagination
   router.get('/files', (req, res) => {
     FilesController.getIndex(req, res);
   });
 
-  // should set isPublic
+  // must ld set isPublic to true on the file document based on the ID
   router.put('/files/:id/publish', (req, res) => {
     FilesController.putPublish(req, res);
   });
 
-  // set if public
+  // mustd set isPublic to false on the file document based on the ID
   router.put('/files/:id/unpublish', (req, res) => {
     FilesController.putUnpublish(req, res);
   });
 
-  // return iD
-  router.post('/files/:id/data', (req, res) => {
+  // msut return the content of the file document based on the ID
+  router.get('/files/:id/data', (req, res) => {
     FilesController.getFile(req, res);
   });
-};
+}
 
-export default routeController;
+export default controllerRouting;
