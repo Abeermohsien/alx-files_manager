@@ -23,4 +23,4 @@ class AppController {
   }
 }
 
-export default AppController;
+xport default AppController;
